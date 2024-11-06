@@ -25,12 +25,7 @@
 
 
     <main>
-        <p>
-            <label>
-                <p>Choose your profile picture</p>
-                <input type="file" name="image" accept="image/*">
-            </label>
-        </p>
+    
     </main>
 
     <footer>

@@ -17,9 +17,9 @@
 
         <nav>
             <a href="/">Home</a>
-            <a href="#">item 2</a>
-            <a href="#">item 3</a>
-            <a href="#">item 4</a>
+            <a href="#">Flowers</a>
+            <a href="#">Bouquets</a>
+            <a href="#">Profile</a>
         </nav>
     </header>
 
@@ -29,7 +29,7 @@
     </main>
 
     <footer>
-        &copy; <?= date('Y'); ?> - BrandName
+        &copy; <?= date('Y'); ?> - Urban Flora
     </footer>
 </body>
 

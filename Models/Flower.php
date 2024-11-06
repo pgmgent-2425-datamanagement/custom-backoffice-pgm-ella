@@ -2,7 +2,7 @@
 
 use App\Models\BaseModel;
 
-class Client extends BaseModel
+class Flower extends BaseModel
 {
 
     public function recent()
