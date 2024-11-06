@@ -1,11 +1,56 @@
 body {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 1rem;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.5;
 }
+
 img {
     max-width: 100%;
     height: auto;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    & .brand {
+        height: 5svh;
+        background-color: hsl(0, 0%, 100%);
+        color: hsl(120, 61%, 23%);
+        text-align: left;
+        text-transform: uppercase;
+        font-weight: 700;
+        padding-top: 3rem;
+        padding-right: 1rem;
+
+        border-right: 1px solid hsl(120, 61%, 23%);
+        border-bottom: 1px solid hsl(120, 61%, 23%);
+
+        &:hover {
+            color: hsl(351, 67%, 78%);
+            cursor: pointer;
+        }
+    }
+
+    & nav {
+        background-color: hsl(120, 61%, 23%);
+        display: flex;
+        flex-direction: column;
+
+        & a {
+            color: hsl(0, 0%, 100%);
+            text-decoration: none;
+            display: inline-block;
+            padding: 0.8rem;
+
+            &:hover {
+                background-color: hsl(351, 67%, 78%);
+                color: hsl(120, 61%, 23%);
+                cursor: pointer;
+            }
+        }
+
+    }
 }

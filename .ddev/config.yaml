@@ -13,6 +13,9 @@ use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
 corepack_enable: false
+host_webserver_port: "4000"
+host_https_port: "4001"
+host_db_port: "4002"
 
 # Key features of DDEV's config.yaml:
 

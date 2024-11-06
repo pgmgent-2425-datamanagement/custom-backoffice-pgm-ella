@@ -1,2 +1,3 @@
-<h1>Base MVC</h1>
+<h1>Urban Flora</h1>
+
 <p>Welcome to this base mvc project.</p>
