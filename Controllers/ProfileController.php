@@ -2,23 +2,20 @@
 
 namespace App\Controllers;
 
-use Profile;
+use App\Models\Profile;
 
+// ProfileController handles listing profiles
 class ProfileController extends BaseController {
 
-    public static function list() {
-        session_start();
+    // This method retrieves all profiles and loads the profiles view
+    public static function list()
+    {
+        $profiles = self::all(); // NOTE: This seems like it should be Profile::all()
 
-        if (!isset($_SESSION['user_id'])) {
-            self::redirect('/login');
-        }
-
-        $profileModel = new Profile();
-        $user = $profileModel->find($_SESSION['user_id']); // get profile by user_id
-
-        self::loadView('/profile/index', [
-            'title' => 'Profile',
-            'user' => $user
+        // Load the view for listing profiles and pass the data
+        self::loadView('/profiles', [
+            'title' => 'Profiles',   // Title for the page
+            'profiles' => $profiles  // Array of profile data
         ]);
     }
 }

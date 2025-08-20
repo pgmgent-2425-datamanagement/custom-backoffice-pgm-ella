@@ -4,14 +4,13 @@ use App\Models\BaseModel;
 
 class Profile extends BaseModel
 {
-    protected $table = 'profiles';
+    protected $table = 'users'; // Override table name to 'users'
 
     protected $fillable = [
-        'user_id',
+        'user_id',      // Fillable properties allow mass assignment
         'first_name',
         'last_name',
         'email',
-        'phone',
         'address',
         'city',
         'state',

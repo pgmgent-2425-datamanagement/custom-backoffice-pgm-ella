@@ -6,49 +6,28 @@ use PDO;
 
 class Flower extends BaseModel
 {
-    public function all(?string $q = null, string $sort = 'id', string $dir = 'DESC'): array
+   // Get the most popular flowers based on order count
+    public static function getMostPopularFlowers($limit = 5)
     {
-        $sql = "SELECT * FROM flowers WHERE 1";
-        $params = [];
+        $sql = "SELECT f.name, COUNT(o.id) AS count
+                FROM flowers f
+                JOIN orders o ON f.id = o.flower_id
+                GROUP BY f.id
+                ORDER BY count DESC
+                LIMIT :limit"; // SQL joins orders to count per flower
 
-        if ($q) {
-            $sql .= " AND name LIKE :q";
-            $params[':q'] = "%$q%";
-        }
+        $stmt = self::getDb()->prepare($sql);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT); // Bind the limit
+        $stmt->execute();
 
-        $sql .= " ORDER BY $sort $dir";
-
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
-
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Return as associative array
     }
 
-    public function find(int $id): ?array
+    // Get total number of flowers in the database
+    public static function getTotalAmount()
     {
-        $stmt = $this->db->prepare("SELECT * FROM flowers WHERE id = :id");
-        $stmt->execute([':id' => $id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row ?: null;
-    }
-
-    public function create(array $data): int
-    {
-        $stmt = $this->db->prepare("
-            INSERT INTO flowers (name, description, price, image, created_at) 
-            VALUES (:name, :description, :price, :image, NOW())
-        ");
-        $stmt->execute($data);
-        return (int)$this->db->lastInsertId();
-    }
-
-    public function update(int $id, array $data): void
-    {
-        $stmt = $this->db->prepare("
-            UPDATE flowers SET name=:name, description=:description, price=:price, image=:image, updated_at=NOW()
-            WHERE id=:id
-        ");
-        $data['id'] = $id;
-        $stmt->execute($data);
+        $sql = "SELECT COUNT(*) AS total FROM flowers";
+        $stmt = self::getDb()->query($sql);
+        return $stmt->fetchColumn(); // Return total count
     }
 }

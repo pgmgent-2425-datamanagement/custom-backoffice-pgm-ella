@@ -1,18 +1,28 @@
 <?php
 
-use App\Models\BaseModel;
+use App\Models\BaseModel; // Import the base model
 
 class Bouquet extends BaseModel
 {
-
-    public function recent()
+    // Get stats on Bouquet statuses
+    public static function getBouquetStatusStats()
     {
-        $sql = 'SELECT * FROM `' . $this->table . '` ORDER BY `created_at` DESC LIMIT 20';
-        $pdo_statement = $this->db->prepare($sql);
-        $pdo_statement->execute();
+        $sql = "SELECT status, COUNT(*) AS total
+                FROM bouquets
+                GROUP BY status"; // Group bouquets by status to get counts
 
-        $db_items = $pdo_statement->fetchAll();
+        $stmt = self::getDb()->query($sql); // Execute query
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Return as associative array
+    }
 
-        return self::castToModel($db_items);
+    // Get today's Bouquets
+    public static function getTodayBouquets()
+    {
+        $sql = "SELECT COUNT(*) AS total
+                FROM bouquets
+                WHERE DATE(created_at) = CURDATE()"; // Count bouquets created today
+
+        $stmt = self::getDb()->query($sql);
+        return $stmt->fetchColumn(); // Return single column value
     }
 }

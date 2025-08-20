@@ -2,67 +2,41 @@
     Dashboard
 </h1>
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:30px; max-width:1000px; margin:0 auto;">
-    <div style="background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <canvas id="ordersChart"></canvas>
-    </div>
-    <div style="background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
-        <canvas id="topChart"></canvas>
-    </div>
+<div style="max-width:800px; margin:0 auto;">
+    <h2>Popular Flowers</h2>
+    <canvas id="popularFlowersChart"></canvas>
+
+    <h2>Bouquet Status</h2>
+    <canvas id="bouquetStatusChart"></canvas>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-const ordersLabels = <?= json_encode(array_column($orders, 'd')) ?>;
-const ordersData   = <?= json_encode(array_map('intval', array_column($orders, 'c'))) ?>;
+    const popularFlowersData = <?php echo json_encode($popularFlowers); ?>; 
+    const bouquetStatusStats = <?php echo json_encode($bouquetStatusStats); ?>;
 
-new Chart(document.getElementById('ordersChart'), {
-    type: 'line',
-    data: {
-        labels: ordersLabels,
-        datasets: [{
-            label: 'Orders per Day',
-            data: ordersData,
-            borderColor: '#e74c3c',
-            backgroundColor: 'rgba(231, 76, 60, 0.2)',
-            tension: 0.4,
-            fill: true,
-            pointRadius: 5,
-            pointBackgroundColor: '#e74c3c'
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { display: false },
-            title: { display: true, text: '📈 Orders (Last 7 Days)', font: { size: 16 } }
+    // Popular Flowers chart
+    new Chart(document.getElementById('popularFlowersChart'), {
+        type: 'bar',
+        data: {
+            labels: popularFlowersData.map(f => f.name),
+            datasets: [{
+                label: 'Orders',
+                data: popularFlowersData.map(f => f.count),
+                backgroundColor: '#ff6384'
+            }]
         }
-    }
-});
+    });
 
-const topLabels = <?= json_encode(array_column($top, 'name')) ?>;
-const topData   = <?= json_encode(array_map('intval', array_column($top, 'c'))) ?>;
-
-new Chart(document.getElementById('topChart'), {
-    type: 'bar',
-    data: {
-        labels: topLabels,
-        datasets: [{
-            label: 'Top Flowers',
-            data: topData,
-            backgroundColor: ['#3498db','#9b59b6','#1abc9c','#f39c12','#e67e22'],
-            borderRadius: 6
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { display: false },
-            title: { display: true, text: '🌼 Most Popular Flowers', font: { size: 16 } }
-        },
-        scales: {
-            y: { beginAtZero: true }
+    // Bouquet Status chart
+    new Chart(document.getElementById('bouquetStatusChart'), {
+        type: 'pie',
+        data: {
+            labels: bouquetStatusStats.map(s => s.status),
+            datasets: [{
+                data: bouquetStatusStats.map(s => s.total),
+                backgroundColor: ['#36a2eb', '#ffce56', '#4bc0c0']
+            }]
         }
-    }
-});
+    });
 </script>

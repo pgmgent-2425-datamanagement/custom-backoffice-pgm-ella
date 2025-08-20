@@ -25,7 +25,7 @@
 
 
     <main>
-        <?= $content; ?>
+        <?= $content; ?> <!-- Injects dynamic page content here -->
     </main>
 
     <footer>
