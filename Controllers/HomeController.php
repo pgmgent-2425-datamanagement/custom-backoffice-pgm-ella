@@ -2,13 +2,8 @@
 
 namespace App\Controllers;
 
-class HomeController extends BaseController {
+class HomeController extends BaseController
+{
 
-    public static function index () {
-
-        self::loadView('/home/index', [
-            'title' => 'Homepage'
-        ]);
-    }
-
+  
 }

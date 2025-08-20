@@ -1,11 +1,55 @@
-URBAN FLOWERS BACKOFFICE
+Urban Flowers Backoffice
 
-Ella Jekale
-202126115
-PGM2
+Student: Ella Jekale
+Student Number: 202126115
+Course: PGM2
 
-Projectomschrijving:
-Deze applicatie is een backoffice systeem voor "Urban Flowers," een webapplicatie gebouwd voor het beheren van een bloemenwinkel. Het systeem stelt beheerders in staat om een database bij te houden met verschillende soorten bloemen en boeketten. De backoffice biedt functionaliteiten zoals het toevoegen, bewerken, en verwijderen van bloemen en boeketten, en maakt het mogelijk om afbeeldingen en prijzen bij te werken voor elk product. De webapplicatie is gebouwd met PHP en een MySQL-database, en ondersteunt het uploaden van afbeeldingen en invoer van productbeschrijvingen.
+'No need to specific login credentials for the backoffice!'
 
-Inloggegevens:
-Voor toegang tot de backoffice zijn geen specifieke inloggegevens vereist, maar de applicatie kan eenvoudig worden uitgebreid met beveiligde inlogfunctionaliteit.
+⸻
+
+Project Description
+
+The Urban Flowers Backoffice is a custom-built management system for a flower shop. It provides administrators with an easy-to-use interface to manage the store’s products, such as flowers and bouquets.
+
+The application is built with PHP and MySQL following the MVC pattern. It allows CRUD (Create, Read, Update, Delete) operations on products, while also supporting image uploads and price management.
+
+Key Features
+	•	Manage flowers and bouquets (add, edit, delete).
+	•	Upload images for each product.
+	•	Update product details including names, descriptions, and prices.
+	•	Organized views for bouquets, flowers, and clients.
+	•	Extendable structure for future features (e.g., authentication, more product types).
+
+Technology Stack
+	•	Backend: PHP (custom MVC)
+	•	Database: MySQL
+	•	Frontend: HTML, PHP views with Bootstrap/Tailwind for styling
+	•	Charts & Statistics: Chart.js (for admin dashboard visualization)
+
+Authentication
+
+Currently, the system does not require login credentials for access. However, authentication functionality can be added to secure the backoffice.
+
+⸻
+
+Installation
+	1.	Clone the repository from GitHub.
+	2.	Import the database from database.sql into MySQL.
+	3.	Configure the .env file with your database connection details.
+	4.	Run the application locally via a PHP server or DDEV/Docker.
+
+⸻
+
+Database Model
+	•	Minimum of 6 tables, including:
+	•	flowers
+	•	bouquets
+	•	clients
+	•	users (optional for authentication)
+	•	orders
+	•	bouquet_flower (pivot table for many-to-many relation)
+
+The full model is documented in databasemodel.pdf.
+
+⸻

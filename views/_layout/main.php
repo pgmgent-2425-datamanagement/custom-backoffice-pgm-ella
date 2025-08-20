@@ -17,9 +17,9 @@
 
         <nav>
             <a href="/">Home</a>
-            <a href="#">Flowers</a>
-            <a href="#">Bouquets</a>
-            <a href="#">Profile</a>
+            <a href="/flowers">Flowers</a>
+            <a href="/bouquets">Bouquets</a>
+            <a href="/profile">Profile</a>
         </nav>
     </header>
 

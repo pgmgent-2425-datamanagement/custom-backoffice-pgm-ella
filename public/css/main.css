@@ -1,5 +1,7 @@
 @import "./flower.css";
 @import "./button.css";
+@import "tailwindcss";
+
 
 /* --------- GENERAL --------- */
 body {

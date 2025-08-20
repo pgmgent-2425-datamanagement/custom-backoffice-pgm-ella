@@ -2,53 +2,53 @@
 
 namespace App\Models;
 
-use App\Models\BaseModel;
+use PDO;
 
 class Flower extends BaseModel
 {
-    // Public function to save the new values (update existing table row)
-    public function save()
+    public function all(?string $q = null, string $sort = 'id', string $dir = 'DESC'): array
     {
-        $sql = 'UPDATE flowers SET name = :name, price = :price, description = :description, image = :image WHERE id = :id';
+        $sql = "SELECT * FROM flowers WHERE 1";
+        $params = [];
 
-        $pdo_statement = $this->db->prepare($sql);
+        if ($q) {
+            $sql .= " AND name LIKE :q";
+            $params[':q'] = "%$q%";
+        }
 
-        $pdo_statement->execute([
-            ':name' => $this->name,
-            ':price' => $this->price,
-            ':image' => $this->image,
-            ':description' => $this->description,
-            ':id' => $this->id
-        ]);
+        $sql .= " ORDER BY $sort $dir";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll();
     }
 
-    // Public function to add a row from the table
-
-    public function add()
+    public function find(int $id): ?array
     {
-        $sql = 'INSERT INTO flowers (name, price, image, description) VALUES (:name, :price, :image, :description)';
-
-        $pdo_statement = $this->db->prepare($sql);
-
-        $pdo_statement->execute([
-            ':name' => $this->name,
-            ':price' => $this->price,
-            ':image' => $this->image,
-            ':description' => $this->description
-        ]);
+        $stmt = $this->db->prepare("SELECT * FROM flowers WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ?: null;
     }
 
-
-    // Public function to delete a row from the table
-
-    public function delete()
+    public function create(array $data): int
     {
-        $sql = 'DELETE FROM flowers WHERE id = :id';
+        $stmt = $this->db->prepare("
+            INSERT INTO flowers (name, description, price, image, created_at) 
+            VALUES (:name, :description, :price, :image, NOW())
+        ");
+        $stmt->execute($data);
+        return (int)$this->db->lastInsertId();
+    }
 
-        $pdo_statement = $this->db->prepare($sql);
-
-        $pdo_statement->execute([
-            ':id' => $this->id
-        ]);
+    public function update(int $id, array $data): void
+    {
+        $stmt = $this->db->prepare("
+            UPDATE flowers SET name=:name, description=:description, price=:price, image=:image, updated_at=NOW()
+            WHERE id=:id
+        ");
+        $data['id'] = $id;
+        $stmt->execute($data);
     }
 }
