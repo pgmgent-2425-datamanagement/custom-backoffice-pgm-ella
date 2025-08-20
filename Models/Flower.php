@@ -30,4 +30,21 @@ class Flower extends BaseModel
         $stmt = self::getDb()->query($sql);
         return $stmt->fetchColumn(); // Return total count
     }
+
+    // Get all flowers with optional search by name
+    public static function getFlowers($name = null)
+{
+    $sql = "SELECT * FROM flowers WHERE 1=1";
+    $params = [];
+
+    if ($name) {
+        $sql .= " AND name LIKE :name";
+        $params[':name'] = "%$name%";
+    }
+
+    $stmt = self::getDb()->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }
