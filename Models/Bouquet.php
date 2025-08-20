@@ -11,7 +11,8 @@ class Bouquet extends BaseModel
                 FROM bouquets
                 GROUP BY status"; // Group bouquets by status to get counts
 
-        $stmt = self::getDb()->query($sql); // Execute query
+        $stmt = self::getDb()->prepare($sql); // Use prepare instead of query to prevent SQL injection
+        $stmt->execute(); // Execute the prepared statement
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Return as associative array
     }
 

@@ -82,7 +82,7 @@ class BaseModel {
     }
 
     private function deleteById (int $id) {
-        $sql = 'DELETE FROM `' . $this->table . '` WHERE `' . $id . '` = :p_id'; // SQL to delete
+        $sql = 'DELETE FROM `' . $this->table . '` WHERE `' . $this->pk . '` = :p_id'; // $this->pk against sql injection: the value $id is passed as a parameter, fully preventing SQL injection.
         $pdo_statement = $this->db->prepare($sql);
         return $pdo_statement->execute([':p_id' => $id]);
     }
